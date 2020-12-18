@@ -21,8 +21,9 @@ const christmasModule = {
             state.reveald = status;
         },
         clearCurrentParticipant(state) {
-            state.CurrentParticipant = null;
+            state.currentParticipant = null;
             state.participantToken = null;
+            localStorage.removeItem("currentParticipant");
         },
         setParticipantError(state, message) {
             state.participantError = message
@@ -30,15 +31,17 @@ const christmasModule = {
     },
     actions: {
         async authParticipant({ dispatch, commit }, participantToken) {
-            christmasAPI.authorizeParticipant(participantToken)
-                .then(response => {
-                    commit("setCurrentParticipant", response)
-                    // commit("closeLogin");
-                    sessionStorage.CurrentParticipant = JSON.stringify(response);
+            try {
+                const response = await christmasAPI.authorizeParticipant(participantToken);
+                if (response.status == 202) {
+                    commit("setParticipantError", response)
+                } else {
+                    commit("setCurrentParticipant", response);
+                    localStorage.currentParticipant = JSON.stringify(response);
                 }
-                ).catch(error => {
-                    dispatch("handleParticipantError", error)
-                })
+            } catch (error) {
+                dispatch("handleParticipantError", error);
+            }
         },
         handleParticipantError({ dispatch }, error) {
             dispatch("handleError", error)
@@ -46,43 +49,28 @@ const christmasModule = {
         handleError({ commit }, error) {
             commit("setParticipantError", error.data)
         },
-        // prepareUser({ commit }) {
-        //     console.log("Action -> @store>prepareUses()");
-        //     if (sessionStorage.getItem("CurrentParticipant")) {
-        //         commit(
-        //             "setCurrentParticipant",
-        //             JSON.parse(sessionStorage.getItem("CurrentParticipant"))
-        //         );
-        //         commit("closeLogin");
-        //         // this.$store.commit(
-        //         //     "setToken",
-        //         //     JSON.parse(sessionStorage.getItem("userToken"))
-        //         // );
-        //     }
-        // },
-        // validate({ dispatch, getters }) {
-        //     christmasAPI.validate(getters.getAccessToken)
-        //         .then(response => {
-        //             console.log(response);
-        //         }
-        //         ).catch(error => dispatch("handleAPIError", error))
-        // },
-        // logout({ commit }) {
-        //     commit("clearCurrentParticipant")
-        //     sessionStorage.removeItem("CurrentParticipant"),
-        //         sessionStorage.removeItem("userToken");
-        //     commit("openLogin")
-        // }
+        prepareParticipant({ commit }) {
+            console.log("Action -> @store>prepareParticipant()");
+            if (localStorage.getItem("currentParticipant")) {
+                commit(
+                    "setCurrentParticipant",
+                    JSON.parse(localStorage.getItem("currentParticipant"))
+                );
+            }
+        },
+        resetParticipant({ commit }) {
+            commit("clearCurrentParticipant");
+        }
     },
     getters: {
         getGetParticipantName: state => {
-            return state.currentParticipant.name;
+            return state.currentParticipant ? state.currentParticipant.name : null;
         },
         getToBuyTo: state => {
-            return state.currentParticipant.buyingToParticipant;
+            return state.currentParticipant ? state.currentParticipant.buyingToParticipant : null;
         },
         getGameName: state => {
-            return state.currentParticipant.giftGame;
+            return state.currentParticipant ? state.currentParticipant.giftGame : null;
         }
 
     }

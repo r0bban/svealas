@@ -30,6 +30,7 @@ export default {
   created() {
     console.log("created!");
     this.$store.dispatch("prepareUser");
+    this.$store.dispatch("prepareParticipant");  
   },
 };
 </script>

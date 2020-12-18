@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import Participant from '../views/Participant.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path:'/game/:participantToken',
-    name: 'Participant',
-    component: Participant
-  },
+  // {
+  //   path:'/game/:participantToken',
+  //   name: 'Participant',
+  //   component: Participant
+  // },
   // {
   //   path:'/jul?key=:participantToken',
   //   component: Participant
