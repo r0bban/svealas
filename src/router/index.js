@@ -6,15 +6,15 @@ import Participant from '../views/Participant.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path:'/game/:participantToken',
-  //   name: 'Participant',
-  //   component: Participant
-  // },
   {
-    path:'/jul?key=:participantToken',
+    path:'/game/:participantToken',
+    name: 'Participant',
     component: Participant
   },
+  // {
+  //   path:'/jul?key=:participantToken',
+  //   component: Participant
+  // },
   {
     path: '/',
     name: 'Home',
