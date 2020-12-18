@@ -16,9 +16,9 @@ const routes = [
   //   component: Participant
   // },
   {
-    path: '/',
+    path: '/?:key=participantToken',
     name: 'Home',
-    component: Home
+    component: Participant
   },
   {
     path: '/about',
