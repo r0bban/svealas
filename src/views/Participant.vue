@@ -25,6 +25,7 @@
 
 <script>
 export default {
+    name: "Participant",
   data() {
     return {
       showRecipient: false,
