@@ -2,6 +2,9 @@
   <main class="game-background">
     <div v-if="this.showVerifyToken" class="login">
       <form class="form" onsubmit="return false">
+        <!-- <div class="form-row"> -->
+          <p class="participant-error" v-if="participantError">{{ participantError }}</p>
+        <!-- </div> -->
         <div class="form-row">
           <!-- <label class="label" for="token">Nyckel: </label> -->
           <input
@@ -48,9 +51,7 @@
       <button v-if="this.showRecipient && !toBuyToExist" @click="verify">
         Kolla igen
       </button>
-      <button id="clear-btn" @click="clear">
-        Rensa kod från minnet
-      </button>
+      <button id="clear-btn" @click="clear">Rensa kod från minnet</button>
     </div>
   </main>
 </template>
@@ -65,6 +66,15 @@ export default {
       showRecipient: false,
       loading: false,
     };
+  },
+  props: {
+    participantToken: String,
+  },
+  created() {
+    if (this.participantToken) {
+      this.token = this.participantToken;
+      this.verify();
+    }
   },
   methods: {
     async verify() {
@@ -81,8 +91,11 @@ export default {
     },
   },
   computed: {
-    showVerifyToken(){
-      return (!this.partisipantExist && !this.loading)
+    participantError() {
+      return this.$store.state.christmasModule.participantError;
+    },
+    showVerifyToken() {
+      return !this.partisipantExist && !this.loading;
     },
     partisipantExist() {
       return this.$store.state.christmasModule.currentParticipant
@@ -125,6 +138,15 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
+}
+.participant-error {
+  display: inherit;
+  background: black;
+  color: yellow;
+  width: 100%;
+  margin: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 .form,
 .form-row {

@@ -6,8 +6,8 @@ const API_CHRISTMAS = axios.create({
 
 export default {
     authorizeParticipant(participantToken) {
-        return API_CHRISTMAS.get("/"+participantToken)
-            .then(response => response.data)
+        return API_CHRISTMAS.get("/" + participantToken)
+            .then(response => response)
             .catch(error => {
                 throw error
             })

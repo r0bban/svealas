@@ -34,9 +34,10 @@ const christmasModule = {
             try {
                 const response = await christmasAPI.authorizeParticipant(participantToken);
                 if (response.status == 202) {
-                    commit("setParticipantError", response)
+                    commit("setParticipantError", response.data)
                 } else {
-                    commit("setCurrentParticipant", response);
+                    commit("setParticipantError", null)
+                    commit("setCurrentParticipant", response.data);
                     localStorage.currentParticipant = JSON.stringify(response);
                 }
             } catch (error) {
@@ -47,7 +48,7 @@ const christmasModule = {
             dispatch("handleError", error)
         },
         handleError({ commit }, error) {
-            commit("setParticipantError", error.data)
+            commit("setParticipantError", error)
         },
         prepareParticipant({ commit }) {
             console.log("Action -> @store>prepareParticipant()");
