@@ -3,8 +3,9 @@
 # abort on errors
 set -e
 
+# This is just commented since I manually run build and commit and copy index.html to 404.html to fix router issue.
 # build
-npm run build
+# npm run build
 
 # navigate into the build output directory
 cd dist

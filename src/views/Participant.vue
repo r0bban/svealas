@@ -71,6 +71,7 @@ export default {
     participantToken: String,
   },
   created() {
+    console.log("Params --->" + JSON.stringify(this.$route.params))
     if (this.participantToken) {
       this.token = this.participantToken;
       this.verify();
@@ -128,6 +129,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.game-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  // padding: 20px;
+  background: rgb(216, 73, 73);
+}
 .login {
   display: flex;
   flex-direction: column;
@@ -192,19 +204,10 @@ export default {
   font-size: 1.3em;
 }
 
-.body {
-  background: green;
-}
-.game-background {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  // padding: 20px;
-  background: rgb(216, 73, 73);
-}
+// .body {
+//   background: green;
+// }
+
 .participant-container {
   text-align: center;
   display: flex;

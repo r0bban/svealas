@@ -2,20 +2,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 import Participant from '../views/Participant.vue'
+import ChristmasGift from '../views/ChristmasGift.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/game/:participantToken',
+    path:'/gift/:giftToken',
+    component: ChristmasGift,
+    props: true
+  },
+  {
+    path:'/:participantToken',
     name: 'Participant',
     component: Participant,
     props: true
   },
-  // {
-  //   path:'/jul?key=:participantToken',
-  //   component: Participant
-  // },
   { 
     path: '/',
     name: 'Home',
@@ -33,8 +35,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  // base: process.env.BASE_URL,
-  base: "/christmas/",
+  base: process.env.BASE_URL,
+  // base: "/christmas/",
   routes
 })
 
